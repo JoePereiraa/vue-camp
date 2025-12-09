@@ -6,7 +6,7 @@
         ]"
         @click="isDropdownOpen = !isDropdownOpen"
       >
-        {{ selectedText }}
+        <span class="truncate">{{ selectedText }}</span>
         <v-icon name="pr-chevron-down" :flip="isDropdownOpen ? 'vertical' : 'horizontal'"/>
       </div>
   

@@ -38,8 +38,7 @@
         <div class="flex flex-col items-center gap-4">
             <hr class="text-gray-200 w-full border"/>
             <div class="flex flex-col gap-3 w-full">
-                <button class="btn bg-blue-500 rounded-lg text-white" @click="triggerTime">OK</button>
-                <button class="btn bg-white rounded-lg">Cancelar</button>
+                <button type="button" class="btn bg-blue-500 rounded-lg text-white" @click.stop="triggerTime">OK</button>
             </div>
         </div>
     </div>

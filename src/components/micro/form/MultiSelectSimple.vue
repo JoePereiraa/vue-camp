@@ -1,11 +1,11 @@
 <template>
     <!-- Simple Select -->
     <div :class="[
-        'flex items-center gap-1',
+        'flex items-center gap-1 flex-wrap',
         { 'flex-col items-start': variation == 'primary' }
     ]">
         <!-- Item -->
-        <div   
+        <div
             v-for="(item, index) in items"
             :key="item?.id ?? index"
             :class="[
@@ -13,6 +13,7 @@
                 'cursor-pointer select-none',
                 { 'bg-blue-400! text-white outline-none': variation == 'secondary' && isChecked(item.value) }  
             ]"
+            @click="variation === 'secondary' ? handleCheckboxChange(item.value) : null"
         >
             <input 
                 v-show="variation == 'primary'"
@@ -38,10 +39,9 @@
             </label>
         </div>
     </div>
-    <span v-if="showRequiredMessage" class="text-sm text-red-400">{{ required_message }}</span>
 </template>
 <script setup>
-    import { computed, onMounted, ref } from 'vue';
+    import { computed, onMounted, ref, watch } from 'vue';
     import { useField, defineRule } from 'vee-validate';
     import { required as required_validate } from '@vee-validate/rules';
     
@@ -62,47 +62,38 @@
             type: Array,
             default: () => []
         },
-        required: {
-            type: Boolean,
-            default: false
-        },
-        required_message: {
-            type: String,
-            default: "Seleção obrigatória"
-        },
         variation: {
             type: String,
             default: 'primary'
         }
     });
 
-    const selectedItems = ref(Array.isArray(props.modelValue) ? [...props.modelValue] : [])
+    const selectedItems = ref(Array.isArray(props.modelValue) ? [...props.modelValue] : []);
     
-    const { errorMessage, meta, handleChange , handleBlur } = useField(
+    const { meta, handleChange , handleBlur } = useField(
         props.name,
         props.required ? 'required' : undefined,
         { initialValue: props.modelValue ?? [] }
     );
 
-    const isChecked = (value) => props.modelValue.includes(value);
+    const isChecked = (value) => selectedItems.value.includes(value);
 
     const handleCheckboxChange = (value) => {
         if (!meta.touched) handleBlur();
-        
-        if(selectedItems.value.includes(value) == true) {
-            const indexOfItem = selectedItems.value.indexOf(value);
-        
-            if(indexOfItem > -1) selectedItems.value.splice(indexOfItem, 1);
-            return;
+
+        const next = [...selectedItems.value];
+        const indexOfItem = next.indexOf(value);
+
+        if(indexOfItem > -1) {
+            next.splice(indexOfItem, 1);
+        } else {
+            next.push(value);
         }
 
-        selectedItems.value.push(value);
-        
-        emit('update:modelValue', selectedItems.value);
-        handleChange(value);
+        selectedItems.value = next;
+        emit('update:modelValue', next);
+        handleChange(next);
     };
-
-    const showRequiredMessage = computed(() => props.required && meta.touched && errorMessage);
     
     const variationClass = computed(() => {
         switch (props.variation) {
@@ -111,6 +102,10 @@
             default: return '';
         }
     })
+
+    watch(() => props.modelValue, (value) => {
+        selectedItems.value = Array.isArray(value) ? [...value] : [];
+    });
 
     onMounted(() => {
         const checkeds = props.items.filter((item) => item.checked == true);

@@ -1,5 +1,5 @@
 <template>
-    <FlexLayout class="flex-col border border-gray-300 p-4 rounded-xl" v-bind="$attrs">
+    <FlexLayout class="flex-col border border-gray-200 p-4 rounded-xl shadow-sm" v-bind="$attrs">
         <slot></slot>
     </FlexLayout>
 </template>
