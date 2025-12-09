@@ -1,5 +1,5 @@
 <script setup>
-  import StoreCampaign from './components/forms/campaign/StoreCampaign.vue';
+  import StoreCampaign from '@/components/forms/campaign/StoreCampaign.vue';
 </script>
 
 <template>

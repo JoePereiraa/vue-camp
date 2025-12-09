@@ -2,9 +2,9 @@ import { differenceInSeconds, parse } from 'date-fns';
 
 const parseTime = (hhmm) => parse(hhmm, 'HH:mm', new Date());
 
-export const computeSchedule = ({ totalMessages, minDelaySec, maxDelaySec, timeSlots }) => {
+export const computeSchedule = ({ totalMessages = 0, minDelaySec = 0, maxDelaySec = 0, timeSlots }) => {
   const avgDelay = (minDelaySec + maxDelaySec) / 2;
-  const avgMessage = Math.floor(totalMessages / timeSlots.length); 
+  const avgMessage = Math.round(totalMessages / timeSlots.length); 
   const details = [];
   let remaining = totalMessages;
 
@@ -12,7 +12,7 @@ export const computeSchedule = ({ totalMessages, minDelaySec, maxDelaySec, timeS
     const start = parseTime(timeSlots[i]);
     const end = parseTime(timeSlots[i + 1]);
     const intervalSec = differenceInSeconds(end, start);
-    const capacity = Math.max(Math.floor(intervalSec / avgDelay), 0);
+    const capacity = Math.max(Math.round(intervalSec / avgDelay), 0);
     const send = Math.min(capacity, remaining);
 
     details.push({

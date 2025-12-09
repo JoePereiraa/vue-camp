@@ -6,6 +6,7 @@ import RadioForm from "./RadioForm.vue";
 import CardForm from "./CardForm.vue";
 import GroupTitleForm from "./GroupTitleForm.vue";
 import RequiredForm from "./RequiredForm.vue";
+import GenericFieldForm from "./GenericFieldForm.vue";
 
 export {
     SelectForm,
@@ -15,5 +16,6 @@ export {
     InputForm,
     CardForm,
     GroupTitleForm,
-    RequiredForm
+    RequiredForm,
+    GenericFieldForm
 }
