@@ -7,6 +7,7 @@ import CardForm from "./CardForm.vue";
 import GroupTitleForm from "./GroupTitleForm.vue";
 import RequiredForm from "./RequiredForm.vue";
 import GenericFieldForm from "./GenericFieldForm.vue";
+import SearchForm from "./SearchForm.vue";
 
 export {
     SelectForm,
@@ -17,5 +18,6 @@ export {
     CardForm,
     GroupTitleForm,
     RequiredForm,
-    GenericFieldForm
+    GenericFieldForm,
+    SearchForm
 }

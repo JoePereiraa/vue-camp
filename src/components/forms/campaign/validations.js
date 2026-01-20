@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 
+/**Store */
 export const storeSchema = yup.object({
     nome_campanha: yup.string().required('O titulo da campanha é obrigatório'),
     instancia_id: yup.number().required('Selecione uma instância para continuar'),
@@ -29,4 +30,24 @@ export const storeSchema = yup.object({
         .min(1, 'Selecione ao menos um dia de disparo'),
     dias_disparo: yup
         .array()
+});
+
+/**Store Webhook */
+export const webhookSchema = yup.object({
+    titulo: yup.string().required('O titulo do webhook é obrigatório'),
+    url: yup.string().url('Defina uma URL válida').required('A URL do webhook é obrigatória'),
+    metodo: yup.string().oneOf(['POST', 'GET']).required('O metódo da requisição é obrigátorio'),
+    campos: yup
+        .string()
+        .required('Os dados JSON são obrigatórios')
+        .test('is-json', 'O formato JSON está inválido', (value) => {
+            if (!value) return false;
+            
+            try {
+                JSON.parse(value);
+                return true;
+            } catch {
+                return false;
+            }
+        })
 });

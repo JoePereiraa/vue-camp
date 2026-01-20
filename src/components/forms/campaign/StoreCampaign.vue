@@ -349,7 +349,7 @@
                     </ColumnLayout>
                 </GridLayout>
             </ColumnLayout>
-            <ColumnLayout class="col-span-3!">
+            <!-- <ColumnLayout class="col-span-3!">
                 <FlexLayout class="flex-col gap-2!">
                     Valores iniciais:
                     <VueJsonPretty root-path="res" :data="campaing" showIcon showLineNumber/>
@@ -359,7 +359,7 @@
                     Valores finais:
                     <VueJsonPretty v-if="valuesForm !== null" root-path="res" :data="valuesForm" showIcon showLineNumber/>
                 </FlexLayout>
-            </ColumnLayout>
+            </ColumnLayout> -->
         </GridLayout>
 
         <button class="btn bg-blue-400 rounded-lg text-white mt-2 shadow-sm">
